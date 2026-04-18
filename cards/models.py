@@ -2,7 +2,6 @@ from django.db import models
 
 # Create your models here.
 
-
 NUM_BOXES = 5
 BOXES = range(1, NUM_BOXES + 1)
 
