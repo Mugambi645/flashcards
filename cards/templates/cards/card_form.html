@@ -1,0 +1,15 @@
+<!-- cards/templates/cards/card_form.html -->
+
+{% extends "cards/base.html" %}
+
+{% block content %}
+    <h2>✨ Create New Card</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Save Card">
+    </form>
+    <a href="{% url 'card-create' %}">
+        Cancel
+    </a>
+{% endblock %}
