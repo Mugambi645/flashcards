@@ -1,5 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render,get_object_or_404, redirect
 from django.urls import reverse_lazy
+from .forms import CardCheckForm
+
+import random
 from django.views.generic import (
     ListView,
     CreateView,
@@ -21,17 +24,26 @@ class CardCreateView(CreateView):
 class CardUpdateView(UpdateView):
     model = Card
     fields = ["question", "answer", "box"]
-    success_url = reverse_lazy("card-list")
+    success_url = reverse_lazy("home")
     template_name = "cards/card_form.html"
 
 
 class BoxView(CardListView):
     template_name = "cards/box.html"
-
+    form_class = CardCheckForm
     def get_queryset(self):
         return Card.objects.filter(box=self.kwargs["box_num"])
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["box_number"] = self.kwargs["box_num"]
+        if self.object_list:
+            context["card"] = random.choice(self.object_list)
         return context
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            card = get_object_or_404(Card, id=form.cleaned_data["card_id"])
+            card.move(form.cleaned_data["solved"])
+
+        return redirect(request.META.get("HTTP_REFERER"))
