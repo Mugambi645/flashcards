@@ -52,7 +52,7 @@ docker-compose up --build
 - Package Manager: uv
 
 ## 📁 Project Structure
-
+```
 flashcards-app/
 ├── flashcards/          # Main Django project
 ├── cards/               # Main flashcards app
@@ -64,6 +64,6 @@ flashcards-app/
 ├── docker-compose.yml
 ├── requirements.txt
 └── README.md
-
+```
 ### 🤝 Contributing
 Feel free to fork the project, open issues, or submit pull requests.
